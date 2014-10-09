@@ -5,5 +5,7 @@ api_version: 1
 threadsafe: true
 
 handlers:
+- url: /ace-builds
+  static_dir: ace-builds
 - url: /.*
   script: helloworld.application
