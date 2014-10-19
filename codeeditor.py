@@ -1,17 +1,17 @@
-import cgi
+ import cgi
 from google.appengine.api import users
 import webapp2
 
-MAIN_PAGE_HTML = """\
+MAIN_PAGE_HTML = "\
 <html>
 	<body>
-		<form action = "/sign" method = "post">
-			<div><textarea name = "content" rows="3" cols="60"></textarea></div>
-			<div><input type="submit" value="Sign"</div>
+		<form action = '/sign' method = 'post'>
+			<div><textarea name = 'content' rows='3' cols='60'></textarea></div>
+			<div><input type='submit' value='Sign'</div>
 		</form>
 	</body>
 </html>
-"""
+"
 
 class MainPage(webapp2.RequestHandler):
 	def get(self):
@@ -26,4 +26,4 @@ class Codeeditor(webapp2.RequestHandler):
 application = webapp2.WSGIApplication([
 	('/', MainPage),
 	('/sign', Codeeditor),
-], debug=True)
+], debug=True) 
