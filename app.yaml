@@ -8,7 +8,7 @@ handlers:
 - url: /ace-builds
   static_dir: ace-builds
 - url: /.*
-  script: helloworld.application
+  script: codeeditor.application
 
 libraries:
 - name: webapp2

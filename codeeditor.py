@@ -16,7 +16,7 @@ class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write(MAIN_PAGE_HTML)
 		
-class Guestbook():
+class Codeeditor():
 	def post(self):
 		self.response.write('<html><body>You wrote: <pre>')
 		self.response.write(cgi.escape(self.request.get('content')))
@@ -24,5 +24,5 @@ class Guestbook():
 
 application = webapp2.WSGIApplication([
 	('/', MainPage),
-	('sign', Guestbook),
+	('sign', Codeeditor),
 ], debug=True)
