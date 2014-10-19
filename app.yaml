@@ -9,3 +9,9 @@ handlers:
   static_dir: ace-builds
 - url: /.*
   script: helloworld.application
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
