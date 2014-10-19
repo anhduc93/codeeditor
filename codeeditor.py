@@ -7,6 +7,7 @@ MAIN_PAGE_HTML = """\
 	<body>
 		<form action = "/sign" method = "post">
 			<div><textarea name = "content" rows="3" cols="60"></textarea></div>
+			<div><input type="submit" value="Sign"</div>
 		</form>
 	</body>
 </html>
@@ -16,7 +17,7 @@ class MainPage(webapp2.RequestHandler):
 	def get(self):
 		self.response.write(MAIN_PAGE_HTML)
 		
-class Codeeditor():
+class Codeeditor(webapp2.RequestHandler):
 	def post(self):
 		self.response.write('<html><body>You wrote: <pre>')
 		self.response.write(cgi.escape(self.request.get('content')))
@@ -24,5 +25,5 @@ class Codeeditor():
 
 application = webapp2.WSGIApplication([
 	('/', MainPage),
-	('sign', Codeeditor),
+	('/sign', Codeeditor),
 ], debug=True)
