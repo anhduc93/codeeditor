@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html lang="en">
+<head>
+<style type="text/css" media="screen">
+    #editor {
+		padding: 10px;
+		height: 500px;
+    }
+	h3{
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+<h3>Code Box</h3>
+<div id="editor"></div>
+<a href = "{{ url|safe }}" >{{ url_linktext }}</a>
+
+{% if current_user %}
+	<form action="/save" method="post">
+		<div><input type="textfield" name="file_name"></div>
+		<div><textarea name="file_content"></textarea></div>
+		<div><input type="submit" value = "Save"></div>
+	</form>
+	<a href = "/list"> Go to your file list </a>
+
+
+{%endif%}
+    
+<script src="./ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/python");
+	editor.getSession().on('change', function(e) {
+		// e.type, etc
+		console.log(editor.getValue());
+	});
+</script>
+</body>
+</html>
+{% endautoescape %}

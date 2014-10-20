@@ -1,77 +1,85 @@
-import cgi
+import os
+import urllib
+
 from google.appengine.api import users
-from google.appengine.api import ndb
+from google.appengine.ext import ndb
+
+import jinja2
 import webapp2
 
-MAIN_PAGE_FOOTER_TEMPLATE = """\
-		<form action = '/sign?%s' method = 'post'>
-			<div><textarea name = 'content' rows='3' cols='60'></textarea></div>
-			<div><input type='submit' value='Sign'</div>
-		</form>
-		<form> Name:
-			<input value="%s" name="guestbook_name">
-			<input type="submit" value="switch">
-		</form>
-		<a href="%s">%s</a>
-	</body>
-</html>
-"""
+JINJA_ENVIRONMENT = jinja2.Environment(
+	loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+	extensions=['jinja2.ext.autoescape'],
+	autoescape=True)
 
-DEFAULT_GUESTBOOK_NAME  = 'default_guestbook'
-def guessbook_key(guessbook_name=DEFAULT_GUESTBOOK_NAME):
-	return ndb.Key('Codeeditor', guestbook_name)
+class MainPage(webapp2.RequestHandler):
+	def get(self):
+		current_user = False
+		if users.get_current_user():
+			current_user = True
+			url = users.create_logout_url(self.request.uri)
+			url_linktext = 'Logout'
+		else:
+			url = users.create_login_url(self.request.uri)
+			url_linktext = 'Login'
+		template_values={
+			'current_user':current_user,
+			'url' :url,
+			'url_linktext': url_linktext,
+		}
+		template = JINJA_ENVIRONMENT.get_template('templates/index.html')
+		self.response.write(template.render(template_values))
 
-class Greeting(ndb.Model):
+DEFAULT_FILE_NAME = 'default_filename'
+def codefile_key(file_name=DEFAULT_FILE_NAME):
+	"""Constructs a Datastore key for a File entity with file_name."""
+	return ndb.Key('CodeFile', file_name)
+
+class CodeFile(ndb.Model):
 	author = ndb.UserProperty()
-	content = ndb.StringProperty(indexed=False)
+	title = ndb.StringProperty()
+	content = ndb.TextProperty(indexed=False)
 	date = ndb.DateTimeProperty(auto_now_add=True)
 	
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('<html><body>')
-		guestbook_name = self.request.get('guestbook_name',DEFAULT_GUESTBOOK_NAME)
+# Handling file-save event
+class CodeFileSave(webapp2.RequestHandler):
+	def post(self):
+		file_name = self.request.get('file_name', DEFAULT_FILE_NAME)	# get the file name textfield
+		code_file = CodeFile(parent = codefile_key(file_name))
 		
-        greetings_query = Greeting.query(
-            ancestor=guestbook_key(guestbook_name)).order(-Greeting.date)
-        greetings = greetings_query.fetch(10)
+		if users.get_current_user():
+			code_file.author = users.get_current_user()
+			code_file.content = self.request.get('file_content')
+			code_file.title = file_name
+			code_file.put()
+			self.response.write("You have successfully saved this file to your account!")
 
-        for greeting in greetings:
-            if greeting.author:
-                self.response.write(
-                        '<b>%s</b> wrote:' % greeting.author.nickname())
-            else:
-                self.response.write('An anonymous person wrote:')
-            self.response.write('<blockquote>%s</blockquote>' %
-                                cgi.escape(greeting.content))
-
-        if users.get_current_user():
-            url = users.create_logout_url(self.request.uri)
-            url_linktext = 'Logout'
-        else:
-            url = users.create_login_url(self.request.uri)
-            url_linktext = 'Login'
-
-        # Write the submission form and the footer of the page
-        sign_query_params = urllib.urlencode({'guestbook_name': guestbook_name})
-        self.response.write(MAIN_PAGE_FOOTER_TEMPLATE %
-                            (sign_query_params, cgi.escape(guestbook_name),
-                             url, url_linktext))
-
-class CodeEditor(webapp2.RequestHandler):
-    def post(self):
-		guestbook_name=self.request.get('guestbook_name',DEFAULT_GUESTBOOK_NAME)
-		greeting = Greeting(parent=guestbook_key(guestbook_name))
+# Lists all file
+class CodeFileListHandler(webapp2.RequestHandler):
+	def get(self):
+		file_name = self.request.get('file_name', DEFAULT_FILE_NAME)
+		self.response.write("This is the list of all files!")
+		query = CodeFile.query(
+			ancestor=codefile_key(file_name)).order(-CodeFile.date)
+		codefiles = query.fetch(10)
 		
-		if user.get_current_user():
-			greeting.author = users.get_current_user()
-		
-		greeting.content = self.request.get('content')
-		greeting.put()
-		
-		query.params = {'guestbook_name':guestbook_name}
-		self.redirect('/?' + urllib.urlencode(query_params))
+		template_values={
+			'codefiles': codefiles,
+		}
+		template = JINJA_ENVIRONMENT.get_template('templates/list.html')
+		self.response.write(template.render(template_values))			
 
+
+# Routing
 application = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/sign', CodeEditor),
+	('/', MainPage),
+	('/list', CodeFileListHandler),
+	('/save', CodeFileSave),
 ], debug=True)
+
+"""
+	Pass JavaScript variable to Python
+	Save into the database
+	Load the file and display to the mainpage
+	Design the interface
+"""

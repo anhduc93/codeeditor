@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html lang="en">
+<head>
+</head>
+<body>
+	{% for codefile in codefiles %}
+		<b>{{codefile.title}}</b>
+	{% endfor %}
+</body>
+</html>
+{% endautoescape %}
