@@ -9,7 +9,7 @@
 		<link href="./dist/css/flat-ui.css" rel="stylesheet">
 </head>
 <body>
-	{%if is_current_user %}
+	{% if is_current_user %}
 		<!-- Navigation bar -->
 		<nav class="navbar navbar-inverse" role="navigation">
 		  <!-- Navbar content -->
@@ -29,15 +29,10 @@
 		</nav>
 		<!-- End Navigation Bar -->
 		
-		<table>
-		<thead><tr><th>File Name</th><th>Date Created</th></tr></thead>
-		<tbody>	
-			{% for codefile in codefiles %}
-				<tr><td><b>{{codefile.title}}</b></td><td>{{codefile.date}}</td></tr>
-			{% endfor %}
-		</tbody>
-		</table>
-	{%endif%}
+		<div class="has-success" style="width:300px">
+			<p class="form-control" type="text" placeholder="Error">{{success_text}}</p>
+		</div>
+	{% endif %}
 </body>
 </html>
 {% endautoescape %}

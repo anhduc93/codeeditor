@@ -7,6 +7,8 @@ threadsafe: true
 handlers:
 - url: /ace-builds
   static_dir: ace-builds
+- url: /dist
+  static_dir: dist
 - url: /.*
   script: codeeditor.application
 

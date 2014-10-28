@@ -11,6 +11,12 @@ indexes:
 # your application using appcfg.py.
 
 - kind: CodeFile
+  properties:
+  - name: author
+  - name: date
+    direction: desc
+
+- kind: CodeFile
   ancestor: yes
   properties:
   - name: date
