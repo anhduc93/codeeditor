@@ -33,7 +33,7 @@ class MainPageHandler(webapp2.RequestHandler):
 			'url_linktext': url_linktext,
 			'user_nickname':user_nickname,
 		}
-		template = JINJA_ENVIRONMENT.get_template('templates/index.html')
+		template = JINJA_ENVIRONMENT.get_template('templates/MainPage.html')
 		self.response.write(template.render(template_values))
 
 # Model
@@ -70,17 +70,19 @@ class CodeFileSaveHandler(webapp2.RequestHandler):
 			url_linktext = 'Logout'
 			user = users.get_current_user()
 			user_nickname = user.nickname()
-
-			template_values={
-				'url_linktext' : url_linktext,
-				'url' : url,
-				'user_nickname' : user_nickname,
-				'is_current_user': is_current_user,
-				'success_text':success_text,
-			}
-			template = JINJA_ENVIRONMENT.get_template('templates/save.html')
-			self.response.write(template.render(template_values))
-
+		else:
+			url = users.create_login_url(self.request.uri)
+			url_linktext = 'Log in using your Google Account'
+			success_text = ""
+		template_values={
+			'url_linktext' : url_linktext,
+			'url' : url,
+			'user_nickname' : user_nickname,
+			'is_current_user': is_current_user,
+			'success_text':success_text,
+		}
+		template = JINJA_ENVIRONMENT.get_template('templates/Save.html')
+		self.response.write(template.render(template_values))
 			
 # Lists all files belong to the current user
 class CodeFileListHandler(webapp2.RequestHandler):
@@ -109,11 +111,11 @@ class CodeFileListHandler(webapp2.RequestHandler):
 			'is_current_user': is_current_user,
 			'codefiles': codefiles,
 		}
-		template = JINJA_ENVIRONMENT.get_template('templates/list.html')
+		template = JINJA_ENVIRONMENT.get_template('templates/List.html')
 		self.response.write(template.render(template_values))			
 
-
 # Routing
+
 application = webapp2.WSGIApplication([
 	('/', MainPageHandler),
 	('/list', CodeFileListHandler),

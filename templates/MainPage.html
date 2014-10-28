@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% autoescape true %}
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+		<!-- Loading Bootstrap -->
+		<link href="./dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+		<!-- Loading Flat UI -->
+		<link href="./dist/css/flat-ui.css" rel="stylesheet">
+<style type="text/css" media="screen">
+	.welcome{
+		padding: 50px;
+		font-size: 50px;
+		text-align:center;
+		margin:0 auto;
+	}
+	.login_text{
+		text-align: center;
+		margin: 0 auto;
+		font-size: 30px;
+	}
+	#login_button{
+		padding: 50px;
+		display: block;
+		text-align: center;
+		margin: 0 auto;
+	}
+    #editor {
+		padding: 10px;
+		height: 300px;
+		width: 800px;
+		margin: 0 auto;
+    }
+	#main_form_label{
+		width: 300px;
+		padding: 10px;
+		margin: 0 auto;
+	}
+	
+	h3{
+		text-align: center;
+	}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+</head>
+<body>
+
+{% if is_current_user %}
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-inverse" role="navigation">
+	  <!-- Navbar content -->
+	  <div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+		  <span class="sr-only">Toggle navigation</span>
+		</button>
+		<a class="navbar-brand" href="/">Note Box</a>
+	  </div>
+	  <div class="collapse navbar-collapse" id="navbar-collapse-01">
+		<p class="navbar-text navbar-right"><a class="navbar-link" href="{{ url|safe }}">{{url_linktext}}</a></p>
+		<p class="navbar-text navbar-right">Signed in as <a class="navbar-link" href="#">{{user_nickname}}</a></p>
+		<ul class="nav navbar-nav">
+		  <li><a href="/list">My List</a></li>
+		</ul>
+	  </div><!-- /.navbar-collapse -->
+	</nav>
+	<!-- End Navigation Bar -->
+	
+	<form action = "/save" method="post">
+		<div id="main_form_label"><input type="textfield" placeholder="Enter a title" name="file_name" class="form-control"></div>
+		<div id = "editor"></div>
+		<textarea id = "file_content" name = "file_content"></textarea>
+		<div id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
+	</form>
+{%else%}
+	<p class = 'lead welcome'> Welcome to Node Box! </p>
+	<!--<form action = "{{url|safe}}" method="post">
+		<div id="main_form_label"><input type="textfield" placeholder="Enter a title" name="file_name" class="form-control"></div>
+		<div id = "editor"></div>
+		<textarea id = "file_content" name = "file_content"></textarea>
+		<div id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
+	</form>-->
+	<div id='login_button'>
+		<p class ='login_text'> Please login to continue! </p>
+		<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
+			Login using your Google account
+		</a>
+	</div>
+{%endif%}
+    
+<script src="./ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+		$("#file_content").hide();
+		var editor = ace.edit("editor");
+		editor.setShowPrintMargin(false);
+		editor.setTheme("ace/theme/katzenmilch");
+		editor.getSession().setMode("ace/mode/python");
+		/*editor.getSession().on('change', function(e) {
+			
+			// e.type, etc
+			//console.log(editor.getValue());
+		});*/
+		$("#submit").click(function(){
+			$("#file_content").text(editor.getValue());
+			//$(".has-success").show();
+		});
+	});
+</script>
+</body>
+</html>
+{% endautoescape %}
