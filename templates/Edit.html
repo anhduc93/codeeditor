@@ -4,14 +4,46 @@
 <head>
 <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
 		<!-- Loading Bootstrap -->
-		<link href="./dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+		<link href="../dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 		<!-- Loading Flat UI -->
-		<link href="./dist/css/flat-ui.css" rel="stylesheet">
-		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-
+		<link href="../dist/css/flat-ui.css" rel="stylesheet">
 </head>
+<style type="text/css" media="screen">
+	.welcome{
+		padding: 50px;
+		font-size: 50px;
+		text-align:center;
+		margin:0 auto;
+	}
+	.login_text{
+		text-align: center;
+		margin: 0 auto;
+		font-size: 30px;
+	}
+	#button{
+		padding: 50px;
+		display: block;
+		text-align: center;
+		margin: 0 auto;
+	}
+    #editor {
+		padding: 10px;
+		height: 300px;
+		width: 800px;
+		margin: 0 auto;
+    }
+	#main_form_label{
+		width: 300px;
+		padding: 10px;
+		margin: 0 auto;
+	}
+	
+	h3{
+		text-align: center;
+	}
+</style>
 <body>
-	{%if is_current_user %}
+	{% if is_current_user %}
 		<!-- Navigation bar -->
 		<nav class="navbar navbar-inverse" role="navigation">
 		  <!-- Navbar content -->
@@ -31,15 +63,10 @@
 		</nav>
 		<!-- End Navigation Bar -->
 		
-		<table>
-		<thead><tr><th>File Name</th><th>Date Created</th><th>Operation</th></tr></thead>
-		<tbody>
-			{% for key, codefile in codefiles.items() %}
-				<tr><td><b>{{codefile.title}} </b></td><td>{{codefile.date}}</td><td>				<a href='/view/{{key}}'>View/edit</a></td></tr>
-			{% endfor %}
-		</tbody>
-		</table>
-	{%endif%}
+		<div class="has-success" style="width:300px">
+			<p class="form-control" type="text" placeholder="Error">{{success_text}}</p>
+		</div>
+	{% endif %}
 </body>
 </html>
 {% endautoescape %}
