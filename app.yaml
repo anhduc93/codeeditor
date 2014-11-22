@@ -11,6 +11,7 @@ handlers:
   static_dir: dist
 - url: /.*
   script: codeeditor.application
+  secure: always
 
 libraries:
 - name: webapp2

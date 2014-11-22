@@ -180,6 +180,7 @@ class CodeFileEditHandler(webapp2.RequestHandler):
 		}
 		template = JINJA_ENVIRONMENT.get_template('templates/Edit.html')
 		self.response.write(template.render(template_values))
+
 # Routing
 application = webapp2.WSGIApplication([
 	('/', MainPageHandler),
