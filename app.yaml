@@ -9,8 +9,6 @@ handlers:
   static_dir: ace-builds
 - url: /dist
   static_dir: dist
-- url: /scripts
-  static_dir: scripts
 - url: /.*
   script: codeeditor.application
   secure: always
