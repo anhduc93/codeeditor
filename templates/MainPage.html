@@ -67,10 +67,10 @@
 	<!-- End Navigation Bar -->
 	
 	<form action = "/save" method="post">
-		<div id="main_form_label"><input type="textfield" placeholder="Enter a title" name="file_name" class="form-control"></div>
+		<div align="center" id="main_form_label"><input type="textfield" placeholder="Enter a title" name="file_name" class="form-control"></div>
 		<div id = "editor"></div>
 		<textarea id = "file_content" name = "file_content"></textarea>
-		<div id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
+		<div align="center" id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
 	</form>
 {%else%}
 	<p class = 'lead welcome'> Welcome to Node Box! </p>
@@ -88,13 +88,13 @@
 	</div>
 {%endif%}
     
-<script src="./ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="../ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 		$("#file_content").hide();
 		var editor = ace.edit("editor");
 		editor.setShowPrintMargin(false);
-		editor.setTheme("ace/theme/katzenmilch");
+		editor.setTheme("ace/theme/monokai");
 		editor.getSession().setMode("ace/mode/python");
 		/*editor.getSession().on('change', function(e) {
 			

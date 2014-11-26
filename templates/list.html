@@ -32,10 +32,10 @@
 		<!-- End Navigation Bar -->
 		
 		<table>
-		<thead><tr><th>File Name</th><th>Date Created</th><th>Operation</th></tr></thead>
+		<thead><tr style="font: bold 100px"><th style="padding: 0 10px 15px;">File Name</th><th style="padding: 0 10px 15px">Date Created</th><th style="padding: 0 10px 15px">Operation</th></tr></thead>
 		<tbody>
 			{% for key, codefile in codefiles.items() %}
-				<tr><td><b>{{codefile.title}} </b></td><td>{{codefile.date}}</td><td>				<a href='/view/{{key}}'>View/edit</a></td></tr>
+				<tr><td style="text-decoration:underline; padding: 0 10px"><b>{{codefile.title}} </b></td><td style="padding: 0 10px">{{codefile.date}}</td><td style="padding: 0 10px">				<a href='/view/{{key}}'>View/Edit</a></td></tr>
 			{% endfor %}
 		</tbody>
 		</table>

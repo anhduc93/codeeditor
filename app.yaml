@@ -7,13 +7,10 @@ threadsafe: true
 handlers:
 - url: /ace-builds
   static_dir: ace-builds
-  secure: always
 - url: /dist
   static_dir: dist
-  secure: always
 - url: /.*
   script: codeeditor.application
-  secure: always
 
 libraries:
 - name: webapp2
