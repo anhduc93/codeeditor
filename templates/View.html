@@ -48,11 +48,12 @@
 		</nav>
 		<!-- End Navigation Bar -->
 	<form action = "/save/{{key}}" method="post">
-		<div align="center" id="main_form_label"><input type="textfield" placeholder="{{codefile.title}}" name="file_name" class="form-control"></div>
+		<div align="center" id="main_form_label"><label style="font-size:20px">Edit File :</label><input type="textfield" placeholder="{{codefile.title}}" name="file_name" class="form-control"></div>
 		<div id = "editor"></div>
 		<textarea id = "file_content" name = "file_content">{{codefile.content}}</textarea>
 		<div align="center" id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
-	</form>
+	    <div><select></select></div>
+    </form>
 	
 	<script src="../ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -61,7 +62,7 @@
 		var editor = ace.edit("editor");
 		editor.setValue($('#file_content').val());
 		editor.setShowPrintMargin(false);
-		editor.setTheme("ace/theme/katzenmilch");
+		editor.setTheme("ace/theme/monokai");
 		editor.getSession().setMode("ace/mode/python");
 		/*editor.getSession().on('change', function(e) {
 			

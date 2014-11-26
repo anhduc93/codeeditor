@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+
 		<!-- Loading Bootstrap -->
 		<link href="./dist/css/vendor/bootstrap.min.css" rel="stylesheet">
 		<!-- Loading Flat UI -->
@@ -30,15 +31,16 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 		<!-- End Navigation Bar -->
-		
-		<table>
-		<thead><tr style="font: bold 100px"><th style="padding: 0 10px 15px;">File Name</th><th style="padding: 0 10px 15px">Date Created</th><th style="padding: 0 10px 15px">Operation</th></tr></thead>
+		<div>
+		<table style="border-style: dotted; margin-left: 10px; border-radius: 2em;" border="1">
+		<thead><tr style="font: bold 100px"><th style="padding: 0 10px 15px; background-color: #2f4154; color:white;" >File Name</th><th style="padding: 0 10px 15px; background-color:#2f4154; color:white;">Date Created</th><th style="padding: 0 10px 15px; background-color:#2f4154; color:white;">Operation</th></tr></thead>
 		<tbody>
 			{% for key, codefile in codefiles.items() %}
 				<tr><td style="text-decoration:underline; padding: 0 10px"><b>{{codefile.title}} </b></td><td style="padding: 0 10px">{{codefile.date}}</td><td style="padding: 0 10px">				<a href='/view/{{key}}'>View/Edit</a></td></tr>
 			{% endfor %}
 		</tbody>
 		</table>
+        </div>
 	{%endif%}
 </body>
 </html>
