@@ -25,6 +25,23 @@
 			h3{
 				text-align: center;
 			}
+			.welcome{
+				padding: 50px;
+				font-size: 50px;
+				text-align:center;
+				margin:0 auto;
+			}
+			.login_text{
+				text-align: center;
+				margin: 0 auto;
+				font-size: 30px;
+			}
+			#login_button{
+				padding: 50px;
+				display: block;
+				text-align: center;
+				margin: 0 auto;
+			}
 		</style>
 </head>
 <body>
@@ -47,35 +64,69 @@
 		  </div><!-- /.navbar-collapse -->
 		</nav>
 		<!-- End Navigation Bar -->
-	<form action = "/save/{{key}}" method="post">
-		<div align="center" id="main_form_label"><label style="font-size:20px">Edit File :</label><input type="textfield" placeholder="{{codefile.title}}" name="file_name" class="form-control"></div>
-		<div id = "editor"></div>
-		<textarea id = "file_content" name = "file_content">{{codefile.content}}</textarea>
-		<div align="center" id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
-	    <div><select></select></div>
-    </form>
+		<div  style = "display: block; padding: 20px; margin: 0px auto; height: 50px; width: 300px;">
+			<label> Select theme: </label>
+			<select id = "theme">
+			  <option value="monokai" selected>Monokai</option>
+			  <option value="merbivore">Merbivore</option>
+			  <option value="clouds">Clouds</option>
+			  <option value="cobalt">Cobalt</option>
+			  <option value="katzenmilch"> Katzenmilch </option>
+			</select>
+		</div>
+		<div style="display: block; padding: 20px; margin: 0px auto; height: 50px; width: 300px;">
+			<label>Select language: </label>
+			<select id = "language">
+			  <option value="Python" selected>Python</option>
+			  <option value="java">Java</option>
+			  <option value="javascript">JavaScript</option>
+			  <option value="php">PHP</option>
+			  <option value="html">HTML</option>
+			</select>
+		</div>
+		
+		<form action = "/save/{{key}}" method="post">
+			<div align="center" id="main_form_label"><label style="font-size:20px">Edit File :</label><input type="textfield" placeholder="{{codefile.title}}" name="file_name" class="form-control"></div>
+			<div id = "editor"></div>
+			<textarea id = "file_content" name = "file_content">{{codefile.content}}</textarea>
+			<div align="center" id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
+			<div><select></select></div>
+		</form>
+		
+		<script src="../ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("#file_content").hide();
+				var editor = ace.edit("editor");
+				editor.setShowPrintMargin(false);
+
+				editor.setTheme("ace/theme/monokai");
+				$("#theme").click(function(){
+					var theme_name = $("#theme").val();
+					editor.setTheme("ace/theme/" + theme_name);
+				});
+				
+				editor.getSession().setMode("ace/mode/python");
+				$("#language").click(function(){
+					var language_name = $("#language").val();
+					editor.getSession().setMode("ace/mode/" + language_name);
+				});
+				
+				$("#submit").click(function(){
+					$("#file_content").val(editor.getValue());
+				});
+			});
+		</script>
 	
-	<script src="../ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
-    $(document).ready(function(){
-		$("#file_content").hide();
-		var editor = ace.edit("editor");
-		editor.setValue($('#file_content').val());
-		editor.setShowPrintMargin(false);
-		editor.setTheme("ace/theme/monokai");
-		editor.getSession().setMode("ace/mode/python");
-		/*editor.getSession().on('change', function(e) {
-			
-			// e.type, etc
-			//console.log(editor.getValue());
-		});*/
-		$("#submit").click(function(){
-			$("#file_content").text(editor.getValue());
-			//$(".has-success").show();
-		});
-	});
-	</script>
-{%endif%}
+	{%else%} <!-- If the user is not logged in -->
+		<p class = 'lead welcome'> Welcome to Node Box! </p>
+		<div id='login_button'>
+			<p class ='login_text'> Please login to continue! </p>
+			<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
+				Login using your Google account
+			</a>
+		</div>
+	{%endif%}
 </body>
 </html>
 {% endautoescape %}

@@ -10,6 +10,40 @@
 		<link href="./dist/css/flat-ui.css" rel="stylesheet">
 		<script src="../dist/js/vendor/jquery.min.js"></script>
 		<script src="../dist/js/vendor/jquery-ui.min.js"></script>
+		<style type="text/css" media="screen">
+			.welcome{
+				padding: 50px;
+				font-size: 50px;
+				text-align:center;
+				margin:0 auto;
+			}
+			.login_text{
+				text-align: center;
+				margin: 0 auto;
+				font-size: 30px;
+			}
+			#login_button{
+				padding: 50px;
+				display: block;
+				text-align: center;
+				margin: 0 auto;
+			}
+			#editor {
+				padding: 10px;
+				height: 300px;
+				width: 800px;
+				margin: 0 auto;
+			}
+			#main_form_label{
+				width: 300px;
+				padding: 10px;
+				margin: 0 auto;
+			}
+			
+			h3{
+				text-align: center;
+			}
+		</style>
 </head>
 <body>
 	{%if is_current_user %}
@@ -41,6 +75,20 @@
 		</tbody>
 		</table>
         </div>
+	{%else%}
+		<p class = 'lead welcome'> Welcome to Node Box! </p>
+		<!--<form action = "{{url|safe}}" method="post">
+			<div id="main_form_label"><input type="textfield" placeholder="Enter a title" name="file_name" class="form-control"></div>
+			<div id = "editor"></div>
+			<textarea id = "file_content" name = "file_content"></textarea>
+			<div id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
+		</form>-->
+		<div id='login_button'>
+			<p class ='login_text'> Please login to continue! </p>
+			<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
+				Login using your Google account
+			</a>
+		</div>
 	{%endif%}
 </body>
 </html>

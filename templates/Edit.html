@@ -68,6 +68,14 @@
 		<div class="has-success" style="width:300px">
 			<p class="form-control" type="text" placeholder="Error">{{success_text}}</p>
 		</div>
+	{%else%}
+		<p class = 'lead welcome'> Welcome to Node Box! </p>>
+		<div id='login_button'>
+			<p class ='login_text'> Please login to continue! </p>
+			<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
+				Login using your Google account
+			</a>
+		</div>
 	{% endif %}
 </body>
 </html>
