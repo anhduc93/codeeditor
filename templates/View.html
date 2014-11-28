@@ -78,7 +78,7 @@
 			<div style="display: block; padding: 20px; margin: 0px auto; height: 50px; width: 300px;">
 				<label>Select language: </label>
 				<select id = "language">
-				  <option value="Python" selected>Python</option>
+				  <option value="python" selected>Python</option>
 				  <option value="java">Java</option>
 				  <option value="javascript">JavaScript</option>
 				  <option value="php">PHP</option>
@@ -99,6 +99,7 @@
 				$(document).ready(function(){
 					$("#file_content").hide();
 					var editor = ace.edit("editor");
+					editor.setValue($("#file_content").val());
 					editor.setShowPrintMargin(false);
 
 					editor.setTheme("ace/theme/monokai");
@@ -123,13 +124,7 @@
 		{%endif%} <!-- End if is_authorized -->
 	
 	{%else%} <!-- If the user is not logged in -->
-		<p class = 'lead welcome'> Welcome to Node Box! </p>
-		<div id='login_button'>
-			<p class ='login_text'> Please login to continue! </p>
-			<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
-				Login using your Google account
-			</a>
-		</div>
+		<p class = "lead welcome"> Oops! You are not authorized to view this file! </p>
 	{%endif%}
 </body>
 </html>

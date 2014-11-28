@@ -125,6 +125,7 @@ class CodeFileViewHandler(webapp2.RequestHandler):
 		is_current_user = False
 		#self.response.write("dasdas")
 		user_nickname = ""
+		template = JINJA_ENVIRONMENT.get_template('templates/View.html')
 		if users.get_current_user():
 			is_authorized = False
 			is_current_user = True
@@ -135,8 +136,9 @@ class CodeFileViewHandler(webapp2.RequestHandler):
 			
 			file_key = ndb.Key(urlsafe=key)
 			codefile = file_key.get()
-			
-			if (codefile.author == users.get_current_user):
+			template_values = {}
+
+			if (codefile.author == users.get_current_user()):
 				is_authorized = True
 				template_values={
 					'url_linktext' : url_linktext,
@@ -147,12 +149,12 @@ class CodeFileViewHandler(webapp2.RequestHandler):
 					'key':key,
 					'is_authorized': is_authorized,
 				}
-				template = JINJA_ENVIRONMENT.get_template('templates/View.html')
-				self.response.write(template.render(template_values))
 			else:
 				templates_values={
+					'is_current_user': is_current_user,
 					'is_authorized': is_authorized,
 				}
+			self.response.write(template.render(template_values))
 		else:
 			url = users.create_login_url(self.request.uri)
 			url_linktext = 'Log in using your Google Account'
@@ -161,7 +163,6 @@ class CodeFileViewHandler(webapp2.RequestHandler):
 				'url':url,
 				'is_current_user': is_current_user,
 			}
-			template = JINJA_ENVIRONMENT.get_template('templates/View.html')
 			self.response.write(template.render(template_values))
 
 class CodeFileEditHandler(webapp2.RequestHandler):
