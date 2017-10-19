@@ -35,7 +35,7 @@
 		width: 300px;
 		padding: 10px;
 		margin: 0 auto;
-	}	
+	}
 	h3{
 		text-align: center;
 	}
@@ -91,7 +91,7 @@
 		<div align="center" id ="main_form_label"><input class='btn btn-hg btn-primary' id = "submit" type="submit" value = "Save"></div>
 	</form>
 {%else%}
-	<p class = 'lead welcome'> Welcome to Node Box! </p>
+	<p class = 'lead welcome'> Welcome to Node Box! Your online code editor! </p>
 	<div id='login_button'>
 		<p class ='login_text'> Please login to continue! </p>
 		<a href = "{{url|safe}}" class='btn btn-hg btn-primary'>
@@ -112,13 +112,13 @@
 			var theme_name = $("#theme").val();
 			editor.setTheme("ace/theme/" + theme_name);
 		});
-		
+
 		editor.getSession().setMode("ace/mode/python");
 		$("#language").click(function(){
 			var language_name = $("#language").val();
 			editor.getSession().setMode("ace/mode/" + language_name);
 		});
-		
+
 		$("#submit").click(function(){
 			$("#file_content").val(editor.getValue());
 		});
