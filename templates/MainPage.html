@@ -102,24 +102,24 @@
 
 <script src="../ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
+  $(document).ready(function() {
 		$("#file_content").hide();
 		var editor = ace.edit("editor");
 		editor.setShowPrintMargin(false);
 
 		editor.setTheme("ace/theme/monokai");
-		$("#theme").click(function(){
+		$("#theme").click(function() {
 			var theme_name = $("#theme").val();
 			editor.setTheme("ace/theme/" + theme_name);
 		});
 
 		editor.getSession().setMode("ace/mode/python");
-		$("#language").click(function(){
+		$("#language").click(function() {
 			var language_name = $("#language").val();
 			editor.getSession().setMode("ace/mode/" + language_name);
 		});
 
-		$("#submit").click(function(){
+		$("#submit").click(function() {
 			$("#file_content").val(editor.getValue());
 		});
 	});
